@@ -4,3 +4,4 @@ dist/
 *.exe
 *.out
 coverage.out
+log.txt
