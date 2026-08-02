@@ -27,11 +27,10 @@
 
 ### Сервис
 - health-check endpoint;
-- middleware аутентификации (с возвратом ошибок в JSON);
+- middleware аутентификации;
 - middleware логирования;
 - worker для публикации запланированных постов;
-- graceful shutdown;
-- асинхронный воркер логгера событий в файл log.txt (channel + goroutine).
+- graceful shutdown.
 
 ---
 
@@ -43,7 +42,7 @@
 - JWT (`github.com/golang-jwt/jwt/v5`)
 - bcrypt (`golang.org/x/crypto/bcrypt`)
 - godotenv
-- Docker / Docker Compose (Multi-stage build)
+- Docker / Docker Compose
 
 ---
 
@@ -61,9 +60,6 @@ blog-api/
 │   │   ├── health.go
 │   │   ├── helpers.go
 │   │   └── post_handler.go
-│   ├── logger/
-│   │   ├── event.go
-│   │   └── logger.go
 │   ├── middleware/
 │   │   ├── auth.go
 │   │   └── logging.go
@@ -225,10 +221,7 @@ docker compose up -d db
 docker build -t blog-api .
 docker run --rm -p 8080:8080 --env-file .env blog-api
 ```
-### Запуск всего стека через Docker Compose:
-```bash
-docker compose up --build
-```
+
 ---
 
 ## API эндпоинты
@@ -350,7 +343,7 @@ curl http://localhost:8080/api/posts/1/comments
 - логин пользователей;
 - bcrypt-хеширование паролей;
 - JWT-аутентификация;
-- middleware авторизации с возвратом ошибок в JSON;
+- middleware авторизации;
 - middleware логирования;
 - CRUD для постов;
 - CRUD для комментариев;
@@ -358,10 +351,7 @@ curl http://localhost:8080/api/posts/1/comments
 - worker для отложенной публикации постов;
 - корректная обработка ошибок;
 - JSON-ответы;
-- graceful shutdown;
-- асинхронный воркер логирования событий (запись в log.txt);
-- Multi-stage Dockerfile для оптимального размера образа;
-- Оптимизированный возврат пустых списков ([] вместо null).
+- graceful shutdown.
 
 ---
 
