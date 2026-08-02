@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"blog-api/internal/handler"
+	"blog-api/internal/logger"
 	"blog-api/internal/middleware"
 	"blog-api/internal/repository"
 	"blog-api/internal/service"
@@ -46,9 +47,16 @@ func main() {
 	postRepo := repository.NewPostRepo(db)
 	commentRepo := repository.NewCommentRepo(db)
 
+	appLogger, err := logger.NewLogger("log.txt")
+	if err != nil {
+		log.Fatalf("init logger: %v", err)
+	}
+	appLogger.Start(ctx)
+	defer appLogger.Wait()
+
 	userService := service.NewUserService(userRepo, cfg.JWTSecret, 24*time.Hour)
-	postService := service.NewPostService(postRepo)
-	commentService := service.NewCommentService(commentRepo, postRepo)
+	postService := service.NewPostService(postRepo, appLogger)
+	commentService := service.NewCommentService(commentRepo, postRepo, appLogger)
 
 	healthHandler := handler.NewHealthHandler()
 	authHandler := handler.NewAuthHandler(userService)

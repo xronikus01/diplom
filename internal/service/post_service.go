@@ -1,20 +1,24 @@
 package service
 
 import (
+	"blog-api/internal/logger"
+	"blog-api/internal/model"
+	"blog-api/internal/repository"
 	"context"
 	"strings"
 	"time"
-
-	"blog-api/internal/model"
-	"blog-api/internal/repository"
 )
 
 type PostService struct {
 	postRepo repository.PostRepository
+	logger   *logger.Logger
 }
 
-func NewPostService(postRepo repository.PostRepository) *PostService {
-	return &PostService{postRepo: postRepo}
+func NewPostService(postRepo repository.PostRepository, logger *logger.Logger) *PostService {
+	return &PostService{
+		postRepo: postRepo,
+		logger:   logger,
+	}
 }
 
 func (s *PostService) Create(ctx context.Context, authorID int, title, content string, publishAt *time.Time) (*model.Post, error) {

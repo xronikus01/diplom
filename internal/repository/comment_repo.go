@@ -78,7 +78,7 @@ func (r *CommentRepo) GetByPostID(ctx context.Context, postID int) ([]model.Comm
 	}
 	defer rows.Close()
 
-	var comments []model.Comment
+	comments := make([]model.Comment, 0)
 	for rows.Next() {
 		var comment model.Comment
 		err := rows.Scan(

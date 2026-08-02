@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
+	"blog-api/internal/logger"
 	"blog-api/internal/model"
 	"blog-api/internal/repository"
 )
@@ -11,12 +13,14 @@ import (
 type CommentService struct {
 	commentRepo repository.CommentRepository
 	postRepo    repository.PostRepository
+	logger      *logger.Logger
 }
 
-func NewCommentService(commentRepo repository.CommentRepository, postRepo repository.PostRepository) *CommentService {
+func NewCommentService(commentRepo repository.CommentRepository, postRepo repository.PostRepository, logger *logger.Logger) *CommentService {
 	return &CommentService{
 		commentRepo: commentRepo,
 		postRepo:    postRepo,
+		logger:      logger,
 	}
 }
 
@@ -46,6 +50,10 @@ func (s *CommentService) Create(ctx context.Context, userID int, postID int, con
 
 	if err := s.commentRepo.Create(ctx, comment); err != nil {
 		return nil, err
+	}
+
+	if s.logger != nil {
+		s.logger.Log(fmt.Sprintf("user %d created comment %d", userID, comment.ID))
 	}
 
 	return comment, nil

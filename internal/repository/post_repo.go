@@ -55,7 +55,7 @@ func (r *PostRepo) GetAllPublished(ctx context.Context) ([]model.Post, error) {
 	}
 	defer rows.Close()
 
-	var posts []model.Post
+	posts := make([]model.Post, 0)
 	for rows.Next() {
 		var post model.Post
 		err := rows.Scan(
@@ -123,7 +123,7 @@ func (r *PostRepo) GetByAuthorID(ctx context.Context, authorID int) ([]model.Pos
 	}
 	defer rows.Close()
 
-	var posts []model.Post
+	posts := make([]model.Post, 0)
 	for rows.Next() {
 		var post model.Post
 		err := rows.Scan(
@@ -208,7 +208,7 @@ func (r *PostRepo) GetScheduledToPublish(ctx context.Context, before time.Time) 
 	}
 	defer rows.Close()
 
-	var posts []model.Post
+	posts := make([]model.Post, 0)
 	for rows.Next() {
 		var post model.Post
 		err := rows.Scan(
