@@ -37,7 +37,7 @@
 
 ## Стек
 
-- Go 1.22
+- Go 1.25
 - Chi Router
 - PostgreSQL 15
 - JWT (`github.com/golang-jwt/jwt/v5`)
